@@ -21,7 +21,7 @@ int main()
 	}
 
 	// create a windowed mode window and its OpenGL context
-	window = glfwCreateWindow(1024, 768, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(1024, 768, "Hello World", nullptr, nullptr);
 	if(!window)
 	{
 		
@@ -54,6 +54,9 @@ int main()
 	glGenBuffers(1, &buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(float) * 2, 0);
 
 	// loop until the user closes the window
 	while(!glfwWindowShouldClose(window))
