@@ -10,5 +10,11 @@ cmake ..
 # running make
 make
 
+# copy program resources
+if [ -d build/bin/res ]; then
+  rm -r build/bin/res/
+fi
+cp -r ../res build/bin/
+
 # returning to root directory
 cd ..

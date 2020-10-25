@@ -10,6 +10,12 @@ cmake ..
 # running make
 make
 
+# copy program resources
+if [ -d build/bin/res ]; then
+  rm -r build/bin/res/
+fi
+cp -r ../res build/bin/
+
 # running program
 cd build/bin || exit
 ./opengl-test
