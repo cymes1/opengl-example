@@ -134,6 +134,7 @@ int main()
 
 	// make the window's context current
 	glfwMakeContextCurrent(window);
+	glfwSwapInterval(1);
 
 	// initialize glew library
 	if(glewInit() != GLEW_OK)
@@ -161,7 +162,7 @@ int main()
 	unsigned int buffer;
     GLCall(glGenBuffers(1, &buffer));
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-    GLCall(glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
+    GLCall(glBufferData(GL_ARRAY_BUFFER, 4 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
 
     GLCall(glEnableVertexAttribArray(0));
     GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(float) * 2, 0));
@@ -176,13 +177,28 @@ int main()
     unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
     GLCall(glUseProgram(shader));
 
+    GLCall(int location = glGetUniformLocation(shader, "u_Color"));
+    float r = 0.0f;
+    float increment = 0.01f;
+
 	// loop until the user closes the window
 	while(!glfwWindowShouldClose(window))
 	{
 		// render here
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
+        if(location != -1)
+        {
+            GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+        }
 		GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+
+        if(r > 1.0f)
+            increment = -0.01f;
+        else if (r < 0.0f)
+            increment = 0.01f;
+
+        r += increment;
 
 		// swap front and back buffers
 		glfwSwapBuffers(window);
