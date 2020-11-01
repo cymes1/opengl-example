@@ -5,6 +5,8 @@
 #include <GLFW/glfw3.h>
 #include "renderer.h"
 #include "vertex-buffer.h"
+#include "vertex-buffer-layout.h"
+#include "vertex-array.h"
 #include "index-buffer.h"
 
 void GLFW_error(int error, const char* description)
@@ -144,15 +146,11 @@ int main()
             2, 3, 0
         };
 
-        unsigned int vao;
-        GLCall(glGenVertexArrays(1, &vao));
-        GLCall(glBindVertexArray(vao));
-
-        // create vertex buffer
+        VertexArray vertexArray;
         VertexBuffer vertexBuffer(positions, 4 * 2 * sizeof(float));
-
-        GLCall(glEnableVertexAttribArray(0));
-        GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, false, sizeof(float) * 2, 0));
+        VertexBufferLayout layout;
+        layout.push<float>(2);
+        vertexArray.addBuffer(vertexBuffer, layout);
 
         IndexBuffer indexBuffer(indices, 6);
 
@@ -164,8 +162,8 @@ int main()
         float r = 0.0f;
         float increment = 0.01f;
 
-        GLCall(glBindVertexArray(0));
         GLCall(glUseProgram(0));
+        vertexArray.unbind();
         vertexBuffer.unbind();
         indexBuffer.unbind();
 
@@ -181,7 +179,7 @@ int main()
                 GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
             }
 
-            GLCall(glBindVertexArray(vao));
+            vertexArray.bind();
             indexBuffer.bind();
 
             GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
