@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 #include "vertex-buffer.h"
 #include "vertex-buffer-layout.h"
-#include "renderer.h"
+#include "utils.h"
 
 class VertexArray
 {
@@ -14,7 +14,7 @@ public:
     VertexArray();
     ~VertexArray();
 
-    void addBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
+    void addBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout) const;
     void bind() const;
     void unbind() const;
 };

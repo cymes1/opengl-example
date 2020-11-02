@@ -6,7 +6,7 @@
 #include <sstream>
 #include <unordered_map>
 #include <GL/glew.h>
-#include "renderer.h"
+#include "utils.h"
 
 struct ShaderProgramSource
 {

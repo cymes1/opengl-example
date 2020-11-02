@@ -10,7 +10,7 @@ VertexArray::~VertexArray()
     GLCall(glDeleteVertexArrays(1, &rendererId));
 }
 
-void VertexArray::addBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout)
+void VertexArray::addBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout) const
 {
     bind();
     vb.bind();

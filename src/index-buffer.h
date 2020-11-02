@@ -2,7 +2,7 @@
 #define INDEX_BUFFER_H
 
 #include <GL/glew.h>
-#include "renderer.h"
+#include "utils.h"
 
 class IndexBuffer
 {
@@ -15,6 +15,7 @@ public:
 
     void bind() const;
     void unbind() const;
+    unsigned int getCount() const;
 };
 
 #endif

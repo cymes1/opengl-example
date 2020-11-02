@@ -76,6 +76,7 @@ int main()
     Shader shader("res/shader/basic.shader");
     float r = 0.0f;
     float increment = 0.01f;
+    Renderer renderer;
 
     shader.unbind();
     vertexArray.unbind();
@@ -85,15 +86,10 @@ int main()
     // loop until the user closes the window
     while (!glfwWindowShouldClose(window))
     {
-        // render here
-        GLCall(glClear(GL_COLOR_BUFFER_BIT));
-
         shader.bind();
         shader.setUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
-        vertexArray.bind();
-        indexBuffer.bind();
-
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+        renderer.clear();
+        renderer.draw(vertexArray, indexBuffer, shader);
 
         if (r > 1.0f)
             increment = -0.01f;

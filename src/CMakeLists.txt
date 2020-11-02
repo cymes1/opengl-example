@@ -1,5 +1,6 @@
 add_executable(opengl-test
         main.cpp
+        utils.cpp
         renderer.cpp
         vertex-buffer.cpp
         vertex-array.cpp

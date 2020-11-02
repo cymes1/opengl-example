@@ -3,7 +3,7 @@
 Shader::Shader(const std::string &filepath)
     : filepath(filepath), rendererId(0)
 {
-    ShaderProgramSource source = parseShader(filepath);
+    ShaderProgramSource source = parseShader();
     rendererId = createShader(source.VertexSource, source.FragmentSource);
 }
 
