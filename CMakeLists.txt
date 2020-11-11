@@ -20,4 +20,5 @@ include_directories(${GLEW_INCLUDE_DIRS})
 find_package(glfw3 REQUIRED)
 include_directories(${GLFW_INCLUDE_DIRS})
 
+add_subdirectory(lib)
 add_subdirectory(src)

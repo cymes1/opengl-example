@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "renderer.h"
+#include "texture.h"
 #include "vertex-buffer.h"
 #include "vertex-buffer-layout.h"
 #include "vertex-array.h"
@@ -54,10 +55,10 @@ int main()
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
     float positions[] = {
-        -0.5f, -0.5f,
-         0.5f, -0.5f,
-         0.5f,  0.5f,
-        -0.5f,  0.5f
+        -0.5f, -0.5f, 0.0f, 0.0f,
+         0.5f, -0.5f, 1.0f, 0.0f,
+         0.5f,  0.5f, 1.0f, 1.0f,
+        -0.5f,  0.5f, 0.0f, 1.0f
     };
 
     unsigned int indices[] = {
@@ -65,9 +66,13 @@ int main()
         2, 3, 0
     };
 
+    GLCall(glEnable(GL_BLEND));
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
     VertexArray vertexArray;
-    VertexBuffer vertexBuffer(positions, 4 * 2 * sizeof(float));
+    VertexBuffer vertexBuffer(positions, 4 * 4 * sizeof(float));
     VertexBufferLayout layout;
+    layout.push<float>(2);
     layout.push<float>(2);
     vertexArray.addBuffer(vertexBuffer, layout);
 
@@ -77,6 +82,11 @@ int main()
     float r = 0.0f;
     float increment = 0.01f;
     Renderer renderer;
+
+    Texture texture("res/texture/test-texture.png");
+    texture.bind();
+    shader.bind();
+    shader.setUniform1i("u_Texture", 0);
 
     shader.unbind();
     vertexArray.unbind();

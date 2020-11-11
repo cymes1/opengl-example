@@ -10,7 +10,7 @@ VertexArray::~VertexArray()
     GLCall(glDeleteVertexArrays(1, &rendererId));
 }
 
-void VertexArray::addBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout) const
+void VertexArray::addBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout) const
 {
     bind();
     vb.bind();
@@ -24,7 +24,7 @@ void VertexArray::addBuffer(const VertexBuffer &vb, const VertexBufferLayout &la
                                      elements[i].type,
                                      elements[i].normalized,
                                      layout.getStride(),
-                                     reinterpret_cast<const void*>(offset * sizeof(unsigned int))));
+                                     reinterpret_cast<const void*>(offset)));
         offset += elements[i].count * VertexBufferElement::getSizeOfType(elements[i].type);
     }
 }

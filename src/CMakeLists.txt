@@ -1,13 +1,17 @@
 add_executable(opengl-test
         main.cpp
-        utils.cpp
+        index-buffer.cpp
         renderer.cpp
+        shader.cpp
+        texture.cpp
         vertex-buffer.cpp
         vertex-array.cpp
         vertex-buffer-layout.cpp
-        index-buffer.cpp
-        shader.cpp)
+        utils.cpp)
 
 target_link_libraries(opengl-test GLEW)
 target_link_libraries(opengl-test glfw)
 target_link_libraries(opengl-test OpenGL::GL)
+target_link_libraries(opengl-test stb_image)
+
+target_include_directories(opengl-test PUBLIC ${PROJECT_SOURCE_DIR}/lib/stb_image)
