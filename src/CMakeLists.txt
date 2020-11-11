@@ -12,6 +12,8 @@ add_executable(opengl-test
 target_link_libraries(opengl-test GLEW)
 target_link_libraries(opengl-test glfw)
 target_link_libraries(opengl-test OpenGL::GL)
+target_link_libraries(opengl-test glm)
 target_link_libraries(opengl-test stb_image)
 
 target_include_directories(opengl-test PUBLIC ${PROJECT_SOURCE_DIR}/lib/stb_image)
+target_include_directories(opengl-test PUBLIC ${PROJECT_SOURCE_DIR}/lib/glm)

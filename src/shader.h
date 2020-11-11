@@ -6,6 +6,7 @@
 #include <sstream>
 #include <unordered_map>
 #include <GL/glew.h>
+#include <glm.hpp>
 #include "utils.h"
 
 struct ShaderProgramSource
@@ -29,6 +30,7 @@ public:
     void unbind() const;
     void setUniform1i(const std::string& name, int value);
     void setUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
+    void setUniformMat4f(const std::string& name, const glm::mat4& matrix);
 
 private:
     ShaderProgramSource parseShader();

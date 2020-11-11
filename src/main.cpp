@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <gtc/matrix_transform.hpp>
 #include "renderer.h"
 #include "texture.h"
 #include "vertex-buffer.h"
@@ -31,7 +32,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// create a windowed mode window and its OpenGL context
-	window = glfwCreateWindow(1024, 768, "Hello World", nullptr, nullptr);
+	window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
 	if(!window)
 	{
 		
@@ -78,15 +79,16 @@ int main()
 
     IndexBuffer indexBuffer(indices, 6);
 
+    glm::mat4 projection = glm::ortho(-1.0f, 1.0f, -0.75f, 0.75f, -1.0f, 1.0f);
+
     Shader shader("res/shader/basic.shader");
-    float r = 0.0f;
-    float increment = 0.01f;
     Renderer renderer;
 
     Texture texture("res/texture/test-texture.png");
     texture.bind();
     shader.bind();
     shader.setUniform1i("u_Texture", 0);
+    shader.setUniformMat4f("u_MVP", projection);
 
     shader.unbind();
     vertexArray.unbind();
@@ -97,16 +99,8 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         shader.bind();
-        shader.setUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
         renderer.clear();
         renderer.draw(vertexArray, indexBuffer, shader);
-
-        if (r > 1.0f)
-            increment = -0.01f;
-        else if (r < 0.0f)
-            increment = 0.01f;
-
-        r += increment;
 
         // swap front and back buffers
         glfwSwapBuffers(window);
