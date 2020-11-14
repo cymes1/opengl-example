@@ -67,10 +67,10 @@ int main()
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
     float positions[] = {
-        100.0f, 0.0f, 0.0f, 0.0f,
-        200.0f, 0.0f, 1.0f, 0.0f,
-        200.0f, 100.0f, 1.0f, 1.0f,
-        100.0f, 100.0f, 0.0f, 1.0f
+        -50.0f, -50.0f, 0.0f, 0.0f,
+         50.0f, -50.0f, 1.0f, 0.0f,
+         50.0f,  50.0f, 1.0f, 1.0f,
+        -50.0f,  50.0f, 0.0f, 1.0f
     };
 
     unsigned int indices[] = {
@@ -91,7 +91,7 @@ int main()
     IndexBuffer indexBuffer(indices, 6);
 
     glm::mat4 projection = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 
     Shader shader("res/shader/basic.shader");
     Renderer renderer;
@@ -106,7 +106,8 @@ int main()
     vertexBuffer.unbind();
     indexBuffer.unbind();
 
-    glm::vec3 translation(200, 200, 0);
+    glm::vec3 translationA(200, 200, 0);
+    glm::vec3 translationB(400, 200, 0);
 
     // loop until the user closes the window
     while (!glfwWindowShouldClose(window))
@@ -117,14 +118,23 @@ int main()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
-        glm::mat4 mvp = projection * view * model;
+        {
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);
+            glm::mat4 mvp = projection * view * model;
+            shader.bind();
+            shader.setUniformMat4f("u_MVP", mvp);
+            renderer.draw(vertexArray, indexBuffer, shader);
+        }
+        {
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB);
+            glm::mat4 mvp = projection * view * model;
+            shader.bind();
+            shader.setUniformMat4f("u_MVP", mvp);
+            renderer.draw(vertexArray, indexBuffer, shader);
+        }
 
-        shader.bind();
-        shader.setUniformMat4f("u_MVP", mvp);
-        renderer.draw(vertexArray, indexBuffer, shader);
-
-        ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
+        ImGui::SliderFloat3("Translation A", &translationA.x, 0.0f, 960.0f);
+        ImGui::SliderFloat3("Translation B", &translationB.x, 0.0f, 960.0f);
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

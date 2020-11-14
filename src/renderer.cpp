@@ -9,6 +9,5 @@ void Renderer::draw(const VertexArray &vertexArray, const IndexBuffer &indexBuff
 {
     shader.bind();
     vertexArray.bind();
-    indexBuffer.bind();
     GLCall(glDrawElements(GL_TRIANGLES, indexBuffer.getCount(), GL_UNSIGNED_INT, nullptr));
 }
