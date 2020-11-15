@@ -11,6 +11,8 @@
 #include "vertex-array.h"
 #include "index-buffer.h"
 #include "shader.h"
+#include "test/test-clear-color.h"
+#include "test/test-menu.h"
 
 void GLFW_error(int error, const char* description)
 {
@@ -109,33 +111,36 @@ int main()
     glm::vec3 translationA(200, 200, 0);
     glm::vec3 translationB(400, 200, 0);
 
+    test::Test* currentTest = nullptr;
+    test::TestMenu* testMenu = new test::TestMenu(currentTest);
+    currentTest = testMenu;
+
+    testMenu->registerTest<test::TestClearColor>("Clear Color");
+
     // loop until the user closes the window
     while (!glfwWindowShouldClose(window))
     {
+        GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
         renderer.clear();
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        if(currentTest)
         {
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);
-            glm::mat4 mvp = projection * view * model;
-            shader.bind();
-            shader.setUniformMat4f("u_MVP", mvp);
-            renderer.draw(vertexArray, indexBuffer, shader);
+            currentTest->onUpdate(0);
+            currentTest->onRender();
+            ImGui::Begin("Test");
+            if(currentTest != testMenu && ImGui::Button("<-"))
+            {
+                delete currentTest;
+                currentTest = testMenu;
+            }
+            currentTest->onImGuiRender();
         }
-        {
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB);
-            glm::mat4 mvp = projection * view * model;
-            shader.bind();
-            shader.setUniformMat4f("u_MVP", mvp);
-            renderer.draw(vertexArray, indexBuffer, shader);
-        }
-
-        ImGui::SliderFloat3("Translation A", &translationA.x, 0.0f, 960.0f);
-        ImGui::SliderFloat3("Translation B", &translationB.x, 0.0f, 960.0f);
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::End();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -144,7 +149,12 @@ int main()
 
         // poll for and process events
         glfwPollEvents();
+
     }
+
+    delete currentTest;
+    if(currentTest != testMenu)
+        delete testMenu;
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();

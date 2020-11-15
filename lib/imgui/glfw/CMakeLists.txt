@@ -1,3 +1,0 @@
-add_library(imgui_impl_glfw imgui_impl_glfw.cpp)
-
-target_link_libraries(imgui_impl_glfw imgui)
