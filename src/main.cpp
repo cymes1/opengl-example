@@ -8,6 +8,16 @@
 #include "test/test-menu.h"
 #include "test/test-clear-color.h"
 #include "test/test-texture2d.h"
+#include "example/base/example.h"
+#include "example/menu-example.h"
+#include "../lib/boost/di/di.hpp"
+#include <root.h>
+#include <injectors/di-context.h>
+
+namespace di = boost::di;
+
+using namespace OpenGlExample;
+using namespace OpenGlExample::Example;
 
 void GLFW_error(int error, const char* description)
 {
@@ -66,6 +76,14 @@ int main()
 
     glm::vec3 translationA(200, 200, 0);
     glm::vec3 translationB(400, 200, 0);
+
+
+    auto injector = installBindings();
+
+    {
+        auto root = injector.create<Root>();
+        root.tick();
+    }
 
     test::Test* currentTest = nullptr;
     test::TestMenu* testMenu = new test::TestMenu(currentTest);
