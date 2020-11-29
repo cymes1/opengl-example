@@ -5,10 +5,14 @@ mkdir -p build
 cd build || exit
 
 # running cmake
-cmake ..
+if ! cmake ..; then
+  exit 1
+fi
 
 # running make
-make
+if ! make; then
+  exit 1
+fi
 
 # copy program resources
 if [ -d build/bin/res ]; then
@@ -16,9 +20,14 @@ if [ -d build/bin/res ]; then
 fi
 cp -r ../res build/bin/
 
-# running program
+# running tests
 cd build/bin || exit
+if ! ./opengl-test-test; then
+  exit 1
+fi
+
+# running program
 ./opengl-test
 
 # returning to root directory
-cd ../../../
+cd ..

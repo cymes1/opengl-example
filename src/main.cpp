@@ -1,23 +1,21 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <imgui.h>
 #include <glfw/imgui_impl_glfw.h>
+#include <imgui.h>
 #include <opengl3/imgui_impl_opengl3.h>
 #include "vertex-buffer.h"
 #include "shader.h"
 #include "test/test-menu.h"
 #include "test/test-clear-color.h"
 #include "test/test-texture2d.h"
-#include "example/base/example.h"
-#include "example/menu-example.h"
-#include "../lib/boost/di/di.hpp"
-#include <root.h>
-#include <injectors/di-context.h>
+#include <di-context/di-context.h>
+#include <roots/example-root.h>
+#include <states/base/state.h>
 
 namespace di = boost::di;
 
 using namespace OpenGlExample;
-using namespace OpenGlExample::Example;
+using namespace OpenGlExample::States;
 
 void GLFW_error(int error, const char* description)
 {
@@ -78,12 +76,8 @@ int main()
     glm::vec3 translationB(400, 200, 0);
 
 
-    auto injector = installBindings();
-
-    {
-        auto root = injector.create<Root>();
-        root.tick();
-    }
+    IRoot& root = injector.create<ExampleRoot&>();
+    root.initialize<States::MenuState>();
 
     test::Test* currentTest = nullptr;
     test::TestMenu* testMenu = new test::TestMenu(currentTest);
@@ -98,10 +92,9 @@ int main()
         GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
+        root.tick();
+        root.render();
+/*
         if(currentTest)
         {
             currentTest->onUpdate(0);
@@ -114,6 +107,12 @@ int main()
             }
             currentTest->onImGuiRender();
         }
+*/
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        root.renderImGui();
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
         ImGui::Render();

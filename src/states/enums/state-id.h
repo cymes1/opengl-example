@@ -1,0 +1,14 @@
+#ifndef STATE_ID_H
+#define STATE_ID_H
+
+namespace OpenGlExample::States
+{
+    enum StateId
+    {
+        MENU,
+        TEST,
+        SECOND_TEST
+    };
+}
+
+#endif
