@@ -8,11 +8,8 @@
 #include "test/test-menu.h"
 #include "test/test-clear-color.h"
 #include "test/test-texture2d.h"
-#include <di-context/di-context.h>
-#include <roots/example-root.h>
-#include <states/base/state.h>
-
-namespace di = boost::di;
+#include <states/roots/root.h>
+#include <states/menu-state.h>
 
 using namespace OpenGlExample;
 using namespace OpenGlExample::States;
@@ -76,7 +73,7 @@ int main()
     glm::vec3 translationB(400, 200, 0);
 
 
-    IRoot& root = injector.create<ExampleRoot&>();
+    Root root;
     root.initialize<States::MenuState>();
 
     test::Test* currentTest = nullptr;

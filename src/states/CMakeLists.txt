@@ -1,9 +1,12 @@
 set(STATES_HEADER_FILES
+        base/iroot.h
         base/state.h
         enums/state-id.h
+        roots/root.h
         menu-state.h)
 
 set(STATES_SOURCE_FILES
+        roots/root.cpp
         menu-state.cpp)
 
 add_library(${STATES_LIB} ${STATES_SOURCE_FILES} ${STATES_HEADER_FILES})

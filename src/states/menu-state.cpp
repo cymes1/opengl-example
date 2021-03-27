@@ -1,6 +1,7 @@
 #include "menu-state.h"
 #include <iostream>
 #include <imgui.h>
+#include "base/iroot.h"
 #include "enums/state-id.h"
 
 namespace OpenGlExample::States
@@ -33,6 +34,7 @@ namespace OpenGlExample::States
         if(ImGui::Button("<-"))
         {
             std::cout << "click" << std::endl;
+            root.createState<MenuState>();
         }
     }
 

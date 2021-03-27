@@ -20,13 +20,8 @@ if [ -d build/bin/res ]; then
 fi
 cp -r ../res build/bin/
 
-# running tests
-cd build/bin || exit
-if ! ./opengl-test-test; then
-  exit 1
-fi
-
 # running program
+cd build/bin || exit
 ./opengl-test
 
 # returning to root directory

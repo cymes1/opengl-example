@@ -1,11 +1,7 @@
 set(EXECUTABLE opengl-test)
 
 set(HEADER_FILES
-        roots/base/iroot.h
-        roots/base/root.h
-        roots/example-root.h
-        di-context/di-context.h
-        di-context/bindings/states-binding.h)
+        )
 
 set(SOURCE_FILES main.cpp
         )
