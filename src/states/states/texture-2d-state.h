@@ -11,7 +11,7 @@
 
 namespace OpenGlExample::States
 {
-    class Texture2dState : public State
+    class Texture2DState : public State
     {
     private:
         std::unique_ptr<VertexBuffer> vertexBuffer;
@@ -24,8 +24,8 @@ namespace OpenGlExample::States
         glm::vec3 translationA;
         glm::vec3 translationB;
     public:
-        explicit Texture2dState(IRoot& root);
-        ~Texture2dState() override = default;
+        explicit Texture2DState(IRoot& root);
+        ~Texture2DState() override = default;
 
         void render() override;
         void renderImGui() override;

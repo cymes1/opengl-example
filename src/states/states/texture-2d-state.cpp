@@ -6,7 +6,7 @@
 
 namespace OpenGlExample::States
 {
-    Texture2dState::Texture2dState(IRoot& root)
+    Texture2DState::Texture2DState(IRoot& root)
             : State(StateId::TEXTURE_2D, root),
             proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
             view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
@@ -44,7 +44,7 @@ namespace OpenGlExample::States
         shader->setUniform1i("u_Texture", 0);
     }
 
-    void Texture2dState::render()
+    void Texture2DState::render()
     {
         GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
@@ -68,7 +68,7 @@ namespace OpenGlExample::States
         }
     }
 
-    void Texture2dState::renderImGui()
+    void Texture2DState::renderImGui()
     {
         ImGui::Begin("Texture 2D");
         if(ImGui::Button("<-"))

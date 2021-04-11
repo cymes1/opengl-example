@@ -22,7 +22,7 @@ cp -r ../res build/bin/
 
 # running program
 cd build/bin || exit
-./opengl-test
+./opengl-example
 
 # returning to root directory
 cd ..

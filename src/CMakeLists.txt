@@ -1,4 +1,4 @@
-set(EXECUTABLE opengl-test)
+set(EXECUTABLE opengl-example)
 
 set(HEADER_FILES
         )

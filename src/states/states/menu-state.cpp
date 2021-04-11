@@ -13,7 +13,7 @@ namespace OpenGlExample::States
     void MenuState::initialize()
     {
         registerTest<OpenGlExample::States::ClearColorState>("Clear Color");
-        registerTest<OpenGlExample::States::Texture2dState>("Texture 2D");
+        registerTest<OpenGlExample::States::Texture2DState>("Texture 2D");
     }
 
     void MenuState::renderImGui()

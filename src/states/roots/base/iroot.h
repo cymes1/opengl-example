@@ -2,7 +2,7 @@
 #define IROOT_H
 
 #include <memory>
-#include "../../states/base/state.h"
+#include <states/states/base/state.h>
 
 namespace OpenGlExample
 {
