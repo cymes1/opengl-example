@@ -5,10 +5,14 @@ mkdir -p build
 cd build || exit
 
 # running cmake
-cmake ..
+if ! cmake ..; then
+  exit 1
+fi
 
 # running make
-make
+if ! make; then
+    exit 1
+fi
 
 # copy program resources
 if [ -d build/bin/res ]; then

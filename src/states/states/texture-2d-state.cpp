@@ -1,29 +1,28 @@
-#include "test-texture2d.h"
-
-#include <utils.h>
-#include <renderer.h>
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
+#include "texture-2d-state.h"
 #include <imgui.h>
+#include <gtc/matrix_transform.hpp>
+#include <states/states/menu-state.h>
+#include <renderer.h>
 
-namespace test {
-
-    TestTexture2D::TestTexture2D()
-        : proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
-          view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
-          translationA(200, 200, 0),
-          translationB(400, 200, 0)
+namespace OpenGlExample::States
+{
+    Texture2DState::Texture2DState(IRoot& root)
+            : State(StateId::TEXTURE_2D, root),
+            proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
+            view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
+            translationA(200, 200, 0),
+            translationB(400, 200, 0)
     {
         float positions[] = {
-                -50.0f, -50.0f, 0.0f, 0.0f,
-                50.0f, -50.0f, 1.0f, 0.0f,
-                50.0f,  50.0f, 1.0f, 1.0f,
-                -50.0f,  50.0f, 0.0f, 1.0f
+            -50.0f, -50.0f, 0.0f, 0.0f,
+             50.0f, -50.0f, 1.0f, 0.0f,
+             50.0f,  50.0f, 1.0f, 1.0f,
+            -50.0f,  50.0f, 0.0f, 1.0f
         };
 
         unsigned int indices[] = {
-                0, 1, 2,
-                2, 3, 0
+            0, 1, 2,
+            2, 3, 0
         };
 
         GLCall(glEnable(GL_BLEND));
@@ -45,17 +44,7 @@ namespace test {
         shader->setUniform1i("u_Texture", 0);
     }
 
-    TestTexture2D::~TestTexture2D()
-    {
-
-    }
-
-    void TestTexture2D::onUpdate(float deltaTime)
-    {
-        Test::onUpdate(deltaTime);
-    }
-
-    void TestTexture2D::onRender()
+    void Texture2DState::render()
     {
         GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
@@ -79,10 +68,14 @@ namespace test {
         }
     }
 
-    void TestTexture2D::onImGuiRender()
+    void Texture2DState::renderImGui()
     {
+        ImGui::Begin("Texture 2D");
+        if(ImGui::Button("<-"))
+        {
+            root.createState<MenuState>();
+        }
         ImGui::SliderFloat3("Translation A", &translationA.x, 0.0f, 960.0f);
         ImGui::SliderFloat3("Translation B", &translationB.x, 0.0f, 960.0f);
     }
-
 }

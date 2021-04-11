@@ -1,5 +1,5 @@
-#ifndef TEST_TEXTURE2D_H
-#define TEST_TEXTURE2D_H
+#ifndef TEXTURE_2D_STATE_H
+#define TEXTURE_2D_STATE_H
 
 #include <memory>
 #include <glm.hpp>
@@ -7,11 +7,11 @@
 #include <index-buffer.h>
 #include <shader.h>
 #include <texture.h>
-#include "test.h"
+#include <states/states/base/state.h>
 
-namespace test {
-
-    class TestTexture2D : public Test
+namespace OpenGlExample::States
+{
+    class Texture2DState : public State
     {
     private:
         std::unique_ptr<VertexBuffer> vertexBuffer;
@@ -24,15 +24,12 @@ namespace test {
         glm::vec3 translationA;
         glm::vec3 translationB;
     public:
-        TestTexture2D();
-        ~TestTexture2D();
+        explicit Texture2DState(IRoot& root);
+        ~Texture2DState() override = default;
 
-        void onUpdate(float deltaTime) override;
-        void onRender() override;
-        void onImGuiRender() override;
+        void render() override;
+        void renderImGui() override;
     };
-
 }
-
 
 #endif
