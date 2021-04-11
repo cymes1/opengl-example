@@ -2,11 +2,6 @@
 
 namespace OpenGlExample
 {
-    Root::Root()
-    {
-        std::cout << "root constructor" << std::endl;
-    }
-
     void Root::tick() const
     {
         currentState->tick();

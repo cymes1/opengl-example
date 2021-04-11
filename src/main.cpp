@@ -5,11 +5,8 @@
 #include <opengl3/imgui_impl_opengl3.h>
 #include "vertex-buffer.h"
 #include "shader.h"
-#include "test/test-menu.h"
-#include "test/test-clear-color.h"
-#include "test/test-texture2d.h"
 #include <states/roots/root.h>
-#include <states/menu-state.h>
+#include <states/states/menu-state.h>
 
 using namespace OpenGlExample;
 using namespace OpenGlExample::States;
@@ -48,7 +45,7 @@ int main()
 
 	// make the window's context current
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 
 	// initialize glew library
 	if(glewInit() != GLEW_OK)
@@ -76,12 +73,6 @@ int main()
     Root root;
     root.initialize<States::MenuState>();
 
-    test::Test* currentTest = nullptr;
-    test::TestMenu* testMenu = new test::TestMenu(currentTest);
-    currentTest = testMenu;
-
-    testMenu->registerTest<test::TestClearColor>("Clear Color");
-    testMenu->registerTest<test::TestTexture2D>("2D Texture");
 
     // loop until the user closes the window
     while (!glfwWindowShouldClose(window))
@@ -123,13 +114,9 @@ int main()
 
     }
 
-    delete currentTest;
-    if(currentTest != testMenu)
-        delete testMenu;
-
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-	glfwTerminate();
+    glfwTerminate();
 	return 0;
 }

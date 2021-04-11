@@ -6,8 +6,8 @@ namespace OpenGlExample::States
     enum StateId
     {
         MENU,
-        TEST,
-        SECOND_TEST
+        CLEAR_COLOR,
+        TEXTURE_2D
     };
 }
 

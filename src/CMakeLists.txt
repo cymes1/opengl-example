@@ -18,7 +18,6 @@ add_executable(${EXECUTABLE} ${SOURCE_FILES}
         ${HEADER_FILES})
 
 add_subdirectory(states)
-add_subdirectory(test)
 
 target_link_libraries(${EXECUTABLE} GLEW)
 target_link_libraries(${EXECUTABLE} glfw)
@@ -26,7 +25,6 @@ target_link_libraries(${EXECUTABLE} OpenGL::GL)
 target_link_libraries(${EXECUTABLE} glm)
 target_link_libraries(${EXECUTABLE} imgui)
 target_link_libraries(${EXECUTABLE} stb_image)
-target_link_libraries(${EXECUTABLE} test)
 target_link_libraries(${EXECUTABLE} ${STATES_LIB})
 
 target_include_directories(${EXECUTABLE} PUBLIC ${PROJECT_SOURCE_DIR}/lib/glm)

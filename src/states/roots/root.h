@@ -2,14 +2,14 @@
 #define ROOT_H
 
 #include <memory>
-#include "../base/iroot.h"
+#include "states/roots/base/iroot.h"
 
 namespace OpenGlExample
 {
     class Root : public IRoot
     {
     public:
-        Root();
+        Root() = default;
 
         void tick() const override;
         void render() const override;
