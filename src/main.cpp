@@ -4,6 +4,8 @@
 #include <imgui.h>
 #include <opengl3/imgui_impl_opengl3.h>
 #include "vertex-buffer.h"
+#include <debug/debug-message-control-info.h>
+#include <debug/debug-callback.h>
 #include <states/roots/root.h>
 #include <states/states/menu-state.h>
 
@@ -18,6 +20,7 @@ void GLFW_error(int error, const char* description)
 bool initializeGLFWLibrary();
 bool createGLFWWindow(GLFWwindow*& window);
 void initializeImGuiLibrary(GLFWwindow* window);
+void initializeDebugLogs();
 
 int main()
 {
@@ -42,6 +45,7 @@ int main()
 	}
 
 	initializeImGuiLibrary(window);
+	initializeDebugLogs();
 	std::cout << glGetString(GL_VERSION) << std::endl;
 
     Root root;
@@ -81,6 +85,7 @@ bool createGLFWWindow(GLFWwindow*& window)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
     window = glfwCreateWindow(960, 540, "OpenGL Example", nullptr, nullptr);
     if(!window)
@@ -102,4 +107,16 @@ void initializeImGuiLibrary(GLFWwindow* window)
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
+}
+
+void initializeDebugLogs()
+{
+    Debug::DebugMessageControlInfo messageControlInfo;
+    messageControlInfo.source = GL_DONT_CARE;
+    messageControlInfo.type = GL_DONT_CARE;
+    messageControlInfo.severity = GL_DEBUG_SEVERITY_NOTIFICATION;
+    messageControlInfo.count = 0;
+    messageControlInfo.ids = nullptr;
+    messageControlInfo.enabled = GL_FALSE;
+    Debug::initializeDebugMode(messageControlInfo);
 }
