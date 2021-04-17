@@ -1,9 +1,11 @@
 set(EXECUTABLE opengl-example)
 
 set(HEADER_FILES
+        debug/debug-callback.h
         )
 
 set(SOURCE_FILES main.cpp
+        debug/debug-callback.cpp
         )
 
 add_executable(${EXECUTABLE} ${SOURCE_FILES}
