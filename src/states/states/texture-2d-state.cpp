@@ -6,8 +6,8 @@
 
 namespace OpenGlExample::States
 {
-    Texture2DState::Texture2DState(IRoot& root)
-            : State(StateId::TEXTURE_2D, root),
+    Texture2DState::Texture2DState(Root& root)
+            : State(root),
             proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
             view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
             translationA(200, 200, 0),
@@ -42,6 +42,11 @@ namespace OpenGlExample::States
         shader = std::make_unique<Shader>("res/shader/basic.shader");
         shader->bind();
         shader->setUniform1i("u_Texture", 0);
+    }
+
+    Texture2DState::~Texture2DState()
+    {
+        shader->unbind();
     }
 
     void Texture2DState::render()

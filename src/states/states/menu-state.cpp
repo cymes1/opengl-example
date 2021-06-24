@@ -1,13 +1,12 @@
 #include "menu-state.h"
 #include <imgui.h>
-#include <states/enums/state-id.h>
 #include <states/states/clear-color-state.h>
 #include <states/states/texture-2d-state.h>
 
 namespace OpenGlExample::States
 {
-    MenuState::MenuState(IRoot& root)
-            : State(StateId::MENU, root)
+    MenuState::MenuState(Root& root)
+            : State(root)
     {}
 
     void MenuState::initialize()

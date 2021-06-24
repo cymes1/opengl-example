@@ -2,21 +2,46 @@
 #define ROOT_H
 
 #include <memory>
-#include <states/roots/base/iroot.h>
+#include <states/states/base/state.h>
 
 namespace OpenGlExample
 {
-    class Root : public IRoot
+    class Root
     {
+    private:
+        std::unique_ptr<States::State> currentState;
+
     public:
         Root() = default;
+        ~Root() = default;
 
-        void tick() const override;
-        void render() const override;
-        void renderImGui() const override;
+        void tick() const;
+        void render() const;
+        void renderImGui() const;
 
-        const States::State* getCurrentState() const override { return currentState.get(); }
+        template <class TNewState>
+        void initialize();
+        template <class TNewState>
+        void createState();
     };
+
+    template <class TNewState>
+    void Root::initialize()
+    {
+        createState<TNewState>();
+    }
+
+    template <class TNewState>
+    void Root::createState()
+    {
+        if(currentState != nullptr)
+        {
+            currentState->dispose();
+            currentState.reset();
+        }
+        currentState = std::make_unique<TNewState>(*this);
+        currentState->initialize();
+    }
 }
 
 #endif

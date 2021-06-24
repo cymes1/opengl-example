@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <functional>
-#include <states/roots/base/iroot.h>
+#include <states/roots/root.h>
 #include <states/states/base/state.h>
 
 namespace OpenGlExample::States
@@ -11,10 +11,10 @@ namespace OpenGlExample::States
     class MenuState : public State
     {
     private:
-        std::vector<std::pair<std::string, std::function<void(IRoot&)>>> examples;
+        std::vector<std::pair<std::string, std::function<void(Root&)>>> examples;
 
     public:
-        explicit MenuState(IRoot& root);
+        explicit MenuState(Root& root);
         ~MenuState() override = default;
 
         void initialize() override;
@@ -24,7 +24,7 @@ namespace OpenGlExample::States
         template<typename T>
         void registerTest(const std::string& name)
         {
-            examples.push_back(std::make_pair(name, [](IRoot& root) { root.createState<T>(); }));
+            examples.push_back(std::make_pair(name, [](Root& root) { root.createState<T>(); }));
         }
     };
 }

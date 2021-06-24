@@ -1,6 +1,4 @@
 set(STATES_HEADER_FILES
-        enums/state-id.h
-        roots/base/iroot.h
         roots/root.h
         states/base/state.h
         states/menu-state.h
