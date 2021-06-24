@@ -6,7 +6,7 @@
 
 namespace OpenGlExample::States
 {
-    MenuState::MenuState(IRoot& root)
+    MenuState::MenuState(Root& root)
             : State(StateId::MENU, root)
     {}
 

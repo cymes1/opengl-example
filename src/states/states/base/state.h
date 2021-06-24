@@ -6,7 +6,7 @@
 
 namespace OpenGlExample
 {
-    class IRoot;
+    class Root;
 }
 
 namespace OpenGlExample::States
@@ -15,10 +15,10 @@ namespace OpenGlExample::States
     {
     protected:
         const StateId id;
-        IRoot& root;
+        Root& root;
 
     protected:
-        explicit State(StateId id, IRoot& root);
+        explicit State(StateId id, Root& root);
 
     public:
         virtual ~State() = default;

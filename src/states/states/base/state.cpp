@@ -2,7 +2,7 @@
 
 namespace OpenGlExample::States
 {
-    State::State(StateId id, IRoot& root)
+    State::State(StateId id, Root& root)
             : id(id), root(root) {}
 
     void State::initialize()

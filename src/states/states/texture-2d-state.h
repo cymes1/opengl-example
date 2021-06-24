@@ -24,8 +24,8 @@ namespace OpenGlExample::States
         glm::vec3 translationA;
         glm::vec3 translationB;
     public:
-        explicit Texture2DState(IRoot& root);
-        ~Texture2DState() override = default;
+        explicit Texture2DState(Root& root);
+        ~Texture2DState() override;
 
         void render() override;
         void renderImGui() override;

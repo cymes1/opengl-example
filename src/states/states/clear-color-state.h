@@ -2,7 +2,6 @@
 #define CLEAR_COLOR_STATE_H
 
 #include <states/states/base/state.h>
-#include <states/roots/base/iroot.h>
 
 namespace OpenGlExample::States
 {
@@ -12,7 +11,7 @@ namespace OpenGlExample::States
         float clearColor[4];
 
     public:
-        explicit ClearColorState(IRoot& root);
+        explicit ClearColorState(Root& root);
         ~ClearColorState() override = default;
 
         void render() override;
