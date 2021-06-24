@@ -7,7 +7,7 @@
 namespace OpenGlExample::States
 {
     Texture2DState::Texture2DState(Root& root)
-            : State(StateId::TEXTURE_2D, root),
+            : State(root),
             proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
             view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
             translationA(200, 200, 0),

@@ -2,7 +2,6 @@
 #define STATE_H
 
 #include <iostream>
-#include <states/enums/state-id.h>
 
 namespace OpenGlExample
 {
@@ -14,11 +13,10 @@ namespace OpenGlExample::States
     class State
     {
     protected:
-        const StateId id;
         Root& root;
 
     protected:
-        explicit State(StateId id, Root& root);
+        explicit State(Root& root);
 
     public:
         virtual ~State() = default;
@@ -28,8 +26,6 @@ namespace OpenGlExample::States
         virtual void render();
         virtual void renderImGui();
         virtual void dispose();
-
-        int getId() const { return id; }
     };
 }
 

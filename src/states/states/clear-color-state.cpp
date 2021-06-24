@@ -6,7 +6,7 @@
 namespace OpenGlExample::States
 {
     ClearColorState::ClearColorState(Root& root)
-        : State(StateId::CLEAR_COLOR, root),
+        : State(root),
         clearColor { 0.2f, 0.3f, 0.8f, 1.0f }
     {}
 

@@ -2,8 +2,8 @@
 
 namespace OpenGlExample::States
 {
-    State::State(StateId id, Root& root)
-            : id(id), root(root) {}
+    State::State(Root& root)
+            : root(root) {}
 
     void State::initialize()
     {}
