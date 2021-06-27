@@ -15,6 +15,8 @@ namespace OpenGlExample::States
         registerTest<OpenGlExample::States::ClearColorState>("Clear Color");
         registerTest<OpenGlExample::States::Texture2DState>("Texture 2D");
         registerTest<OpenGlExample::States::BasicSquareState>("Basic Square");
+
+        glClearColor(0, 0, 0, 0);
     }
 
     void MenuState::renderImGui()

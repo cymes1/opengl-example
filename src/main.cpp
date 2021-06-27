@@ -53,7 +53,6 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
         root.tick();
