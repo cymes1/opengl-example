@@ -2,6 +2,7 @@
 #include <imgui.h>
 #include <states/states/clear-color-state.h>
 #include <states/states/texture-2d-state.h>
+#include <states/states/basic-square-state.h>
 
 namespace OpenGlExample::States
 {
@@ -13,6 +14,7 @@ namespace OpenGlExample::States
     {
         registerTest<OpenGlExample::States::ClearColorState>("Clear Color");
         registerTest<OpenGlExample::States::Texture2DState>("Texture 2D");
+        registerTest<OpenGlExample::States::BasicSquareState>("Basic Square");
     }
 
     void MenuState::renderImGui()

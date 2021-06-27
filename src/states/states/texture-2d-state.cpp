@@ -39,7 +39,7 @@ namespace OpenGlExample::States
 
         texture = std::make_unique<Texture>("res/texture/test-texture.png");
 
-        shader = std::make_unique<Shader>("res/shader/basic.shader");
+        shader = std::make_unique<Shader>("res/shader/basic-texture.shader");
         shader->bind();
         shader->setUniform1i("u_Texture", 0);
     }
