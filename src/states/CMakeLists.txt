@@ -4,6 +4,7 @@ set(STATES_HEADER_FILES
         states/menu-state.h
         states/clear-color-state.h
         states/texture-2d-state.h
+        states/basic-square-state.h
         )
 
 set(STATES_SOURCE_FILES
@@ -12,6 +13,7 @@ set(STATES_SOURCE_FILES
         states/menu-state.cpp
         states/clear-color-state.cpp
         states/texture-2d-state.cpp
+        states/basic-square-state.cpp
         )
 
 add_library(${STATES_LIB} ${STATES_SOURCE_FILES} ${STATES_HEADER_FILES})
