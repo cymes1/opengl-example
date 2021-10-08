@@ -1,0 +1,33 @@
+#ifndef PROJECTION_MATRIX_STATE_H
+#define PROJECTION_MATRIX_STATE_H
+
+#include <memory>
+#include <glm.hpp>
+#include <vertex-array.h>
+#include <index-buffer.h>
+#include <shader.h>
+#include <states/states/base/state.h>
+
+namespace OpenGlExample::States
+{
+    class ProjectionMatrixState : public State
+    {
+    private:
+        std::unique_ptr<VertexBuffer> vertexBuffer;
+        std::unique_ptr<VertexArray> vertexArray;
+        std::unique_ptr<IndexBuffer> indexBuffer;
+        std::unique_ptr<Shader> shader;
+        glm::mat4 proj;
+        glm::mat4 view;
+        glm::vec3 translationA;
+        glm::vec3 translationB;
+    public:
+        explicit ProjectionMatrixState(Root& root);
+        ~ProjectionMatrixState() override;
+
+        void render() override;
+        void renderImGui() override;
+    };
+}
+
+#endif

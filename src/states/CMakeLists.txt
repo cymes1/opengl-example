@@ -3,6 +3,7 @@ set(STATES_HEADER_FILES
         states/base/state.h
         states/menu-state.h
         states/clear-color-state.h
+        states/projection-matrix-state.h
         states/texture-2d-state.h
         states/basic-square-state.h
         )
@@ -12,6 +13,7 @@ set(STATES_SOURCE_FILES
         states/base/state.cpp
         states/menu-state.cpp
         states/clear-color-state.cpp
+        states/projection-matrix-state.cpp
         states/texture-2d-state.cpp
         states/basic-square-state.cpp
         )
