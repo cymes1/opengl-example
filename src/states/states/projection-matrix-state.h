@@ -21,6 +21,18 @@ namespace OpenGlExample::States
         glm::mat4 view;
         glm::vec3 translationA;
         glm::vec3 translationB;
+        float left;
+        float right;
+        float bottom;
+        float top;
+        float near;
+        float far;
+        float fovy;
+        glm::vec3 vecView;
+        glm::vec3 vecCenter;
+        glm::vec3 vecHead;
+        bool isPerspective;
+
     public:
         explicit ProjectionMatrixState(Root& root);
         ~ProjectionMatrixState() override;

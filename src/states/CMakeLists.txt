@@ -20,6 +20,8 @@ set(STATES_SOURCE_FILES
 
 add_library(${STATES_LIB} ${STATES_SOURCE_FILES} ${STATES_HEADER_FILES})
 
+target_link_libraries(${STATES_LIB} imgui)
+
 target_include_directories(${STATES_LIB} PUBLIC ${PROJECT_SOURCE_DIR}/lib/imgui)
 target_include_directories(${STATES_LIB} PUBLIC ${PROJECT_SOURCE_DIR}/lib/glm)
 target_include_directories(${STATES_LIB} PUBLIC ${PROJECT_SOURCE_DIR}/lib/stb_image)

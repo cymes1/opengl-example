@@ -8,25 +8,40 @@ namespace OpenGlExample::States
 {
     ProjectionMatrixState::ProjectionMatrixState(Root& root)
             : State(root),
-              proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
               view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
-              translationA(200, 200, 0),
-              translationB(400, 200, 0)
+            //proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
+              translationA(0, 0, 0),
+              translationB(0, 2, 0),
+              left(-480),
+              right(480),
+              bottom(-270),
+              top(270),
+              near(2),
+              far(100),
+              fovy(45),
+              vecView(0, 0, 2),
+              vecCenter(0, 0, 0),
+              vecHead(0, 1, 0)
     {
+/*
         float positions[] = {
             -50.0f, -50.0f,
              50.0f, -50.0f,
              50.0f,  50.0f,
             -50.0f,  50.0f
         };
+*/
+        float positions[] = {
+                -1.0f, -1.0f,
+                 1.0f, -1.0f,
+                 1.0f,  1.0f,
+                -1.0f,  1.0f
+        };
 
         unsigned int indices[] = {
             0, 1, 2,
             2, 3, 0
         };
-
-        GLCall(glEnable(GL_BLEND));
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
 
         vertexBuffer = std::make_unique<VertexBuffer>(positions, 4 * 2 * sizeof(float));
@@ -47,8 +62,24 @@ namespace OpenGlExample::States
 
     void ProjectionMatrixState::render()
     {
-        GLCall(glClearColor(0.0f, 0.0f, 0.0f, 0.0f));
-        GLCall(glClear(GL_COLOR_BUFFER_BIT));
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        if(isPerspective)
+        {
+            float aspectRatio = (right - left) / (top - bottom);
+            proj = glm::perspective(glm::radians(fovy), aspectRatio, near, far);
+        }
+        else
+        {
+            proj = glm::ortho(left, right, bottom, top, near, far);
+        }
+
+        view = glm::lookAt(
+                vecView,
+                vecCenter,
+                vecHead
+                );
 
         Renderer renderer;
 
@@ -77,7 +108,19 @@ namespace OpenGlExample::States
         {
             root.createState<MenuState>();
         }
-        ImGui::SliderFloat3("Translation A", &translationA.x, 0.0f, 960.0f);
-        ImGui::SliderFloat3("Translation B", &translationB.x, 0.0f, 960.0f);
+
+        ImGui::DragFloat("left", &left, 1.0f, -1000.0f, 1000.0f);
+        ImGui::DragFloat("right", &right, 1.0f, -1000.0f, 1000.0f);
+        ImGui::DragFloat("bottom", &bottom, 1.0f, -1000.0f, 1000.0f);
+        ImGui::DragFloat("top", &top, 1.0f, -1000.0f, 1000.0f);
+        ImGui::DragFloat("near", &near, 0.001f, -1000.0f, 1000.0f);
+        ImGui::DragFloat("far", &far, 0.01f, -1000.0f, 1000.0f);
+        ImGui::DragFloat("fovy", &fovy, 1.0f, 0.0f, 180.0f);
+        ImGui::Checkbox("IsPerspective", &isPerspective);
+        ImGui::DragFloat3("Translation A", &translationA.x, 1.0f, -960.0f, 960.0f);
+        ImGui::DragFloat3("Translation B", &translationB.x, 1.0f, -960.0f, 960.0f);
+        ImGui::DragFloat3("View", &vecView.x, 0.001f, -960.0f, 960.0f);
+        ImGui::DragFloat3("Center", &vecCenter.x, 0.001f, -960.0f, 960.0f);
+        ImGui::DragFloat3("Head", &vecHead.x, 0.001f, -960.0f, 960.0f);
     }
 }
