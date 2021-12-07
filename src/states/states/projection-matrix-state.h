@@ -10,6 +10,12 @@
 
 namespace OpenGlExample::States
 {
+    enum ProjectionType
+    {
+        ORTHOGRAPHIC,
+        PERSPECTIVE
+    };
+
     class ProjectionMatrixState : public State
     {
     private:
@@ -31,7 +37,7 @@ namespace OpenGlExample::States
         glm::vec3 vecView;
         glm::vec3 vecCenter;
         glm::vec3 vecHead;
-        bool isPerspective;
+        ProjectionType projectionType;
 
     public:
         explicit ProjectionMatrixState(Root& root);
@@ -39,6 +45,10 @@ namespace OpenGlExample::States
 
         void render() override;
         void renderImGui() override;
+
+    private:
+        void renderViewportData();
+        void renderElementsData();
     };
 }
 

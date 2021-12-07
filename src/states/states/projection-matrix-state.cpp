@@ -21,7 +21,8 @@ namespace OpenGlExample::States
               fovy(45),
               vecView(0, 0, 500),
               vecCenter(0, 0, -1),
-              vecHead(0, 1, 0)
+              vecHead(0, 1, 0),
+              projectionType(ORTHOGRAPHIC)
     {
         float positions[] = {
                 -50.0f, -50.0f,
@@ -59,14 +60,16 @@ namespace OpenGlExample::States
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        if(isPerspective)
+        switch (projectionType)
         {
-            float aspectRatio = (right - left) / (top - bottom);
-            proj = glm::perspective(glm::radians(fovy), aspectRatio, near, far);
-        }
-        else
-        {
-            proj = glm::ortho(left, right, bottom, top, near, far);
+            case ORTHOGRAPHIC:
+                proj = glm::ortho(left, right, bottom, top, near, far);
+                break;
+
+            case PERSPECTIVE:
+                float aspectRatio = (right - left) / (top - bottom);
+                proj = glm::perspective(glm::radians(fovy), aspectRatio, near, far);
+                break;
         }
 
         view = glm::lookAt(
@@ -103,18 +106,48 @@ namespace OpenGlExample::States
             root.createState<MenuState>();
         }
 
+        ImGuiTabBarFlags tabBarFlags = ImGuiTabBarFlags_None;
+        if (ImGui::BeginTabBar("ProjectionTabBar", tabBarFlags))
+        {
+            if (ImGui::BeginTabItem("ORTHOGRAPHIC"))
+            {
+                projectionType = ORTHOGRAPHIC;
+                renderViewportData();
+                renderElementsData();
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem("Perspective"))
+            {
+                projectionType = PERSPECTIVE;
+                renderViewportData();
+                ImGui::DragFloat("fovy", &fovy, 1.0f, 0.0f, 180.0f);
+                renderElementsData();
+                ImGui::EndTabItem();
+            }
+            ImGui::EndTabBar();
+        }
+    }
+
+    void ProjectionMatrixState::renderViewportData()
+    {
+        ImGui::Spacing();
+        ImGui::Text("Viewport");
         ImGui::DragFloat("left", &left, 1.0f, -1000.0f, 1000.0f);
         ImGui::DragFloat("right", &right, 1.0f, -1000.0f, 1000.0f);
         ImGui::DragFloat("bottom", &bottom, 1.0f, -1000.0f, 1000.0f);
         ImGui::DragFloat("top", &top, 1.0f, -1000.0f, 1000.0f);
         ImGui::DragFloat("near", &near, 0.001f, -1000.0f, 1000.0f);
         ImGui::DragFloat("far", &far, 0.01f, -1000.0f, 1000.0f);
-        ImGui::DragFloat("fovy", &fovy, 1.0f, 0.0f, 180.0f);
-        ImGui::Checkbox("IsPerspective", &isPerspective);
-        ImGui::DragFloat3("Translation A", &translationA.x, 1.0f, -960.0f, 960.0f);
-        ImGui::DragFloat3("Translation B", &translationB.x, 1.0f, -960.0f, 960.0f);
-        ImGui::DragFloat3("View", &vecView.x, 1.0f, -960.0f, 960.0f);
-        ImGui::DragFloat3("Center", &vecCenter.x, 1.0f, -960.0f, 960.0f);
-        ImGui::DragFloat3("Head", &vecHead.x, 1.0f, -960.0f, 960.0f);
+    }
+
+    void ProjectionMatrixState::renderElementsData()
+    {
+        ImGui::Separator();
+        ImGui::Text("Squares position");
+        ImGui::DragFloat3("Red", &translationA.x, 1.0f, -960.0f, 960.0f);
+        ImGui::DragFloat3("Green", &translationB.x, 1.0f, -960.0f, 960.0f);
+        ImGui::Separator();
+        ImGui::Text("Camera position");
+        ImGui::DragFloat3("Camera", &vecView.x, 1.0f, -960.0f, 960.0f);
     }
 }
