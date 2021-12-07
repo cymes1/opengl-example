@@ -24,9 +24,8 @@ namespace OpenGlExample::States
         std::unique_ptr<IndexBuffer> indexBuffer;
         std::unique_ptr<Shader> shader;
         glm::mat4 proj;
-        glm::mat4 view;
-        glm::vec3 translationA;
-        glm::vec3 translationB;
+        glm::vec3 redSquarePosition;
+        glm::vec3 greenSquarePosition;
         float left;
         float right;
         float bottom;

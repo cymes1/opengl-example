@@ -8,10 +8,9 @@ namespace OpenGlExample::States
 {
     ProjectionMatrixState::ProjectionMatrixState(Root& root)
             : State(root),
-              view(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0))),
-            //proj(glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f)),
-              translationA(0, 0, 0),
-              translationB(0, 120, -130),
+              proj(glm::mat4(1.0f)),
+              redSquarePosition(0, 0, 0),
+              greenSquarePosition(0, 120, -130),
               left(-480),
               right(480),
               bottom(-270),
@@ -25,10 +24,10 @@ namespace OpenGlExample::States
               projectionType(ORTHOGRAPHIC)
     {
         float positions[] = {
-                -50.0f, -50.0f,
-                 50.0f, -50.0f,
-                 50.0f,  50.0f,
-                -50.0f,  50.0f
+            -50.0f, -50.0f,
+             50.0f, -50.0f,
+             50.0f,  50.0f,
+            -50.0f,  50.0f
         };
 
         unsigned int indices[] = {
@@ -72,16 +71,10 @@ namespace OpenGlExample::States
                 break;
         }
 
-        view = glm::lookAt(
-                vecView,
-                vecView + vecCenter,
-                vecHead
-                );
-
+        glm::mat4 view = glm::lookAt( vecView, vecView + vecCenter, vecHead );
         Renderer renderer;
-
         {
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationA);
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), redSquarePosition);
             glm::mat4 mvp = proj * view * model;
             shader->bind();
             shader->setUniformMat4f("u_MVP", mvp);
@@ -89,7 +82,7 @@ namespace OpenGlExample::States
             renderer.draw(*vertexArray, *indexBuffer, *shader);
         }
         {
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translationB);
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), greenSquarePosition);
             glm::mat4 mvp = proj * view * model;
             shader->bind();
             shader->setUniformMat4f("u_MVP", mvp);
@@ -100,7 +93,7 @@ namespace OpenGlExample::States
 
     void ProjectionMatrixState::renderImGui()
     {
-        ImGui::Begin("Texture 2D");
+        ImGui::Begin("Viewport");
         if(ImGui::Button("<-"))
         {
             root.createState<MenuState>();
@@ -109,7 +102,7 @@ namespace OpenGlExample::States
         ImGuiTabBarFlags tabBarFlags = ImGuiTabBarFlags_None;
         if (ImGui::BeginTabBar("ProjectionTabBar", tabBarFlags))
         {
-            if (ImGui::BeginTabItem("ORTHOGRAPHIC"))
+            if (ImGui::BeginTabItem("Orthographic"))
             {
                 projectionType = ORTHOGRAPHIC;
                 renderViewportData();
@@ -144,8 +137,8 @@ namespace OpenGlExample::States
     {
         ImGui::Separator();
         ImGui::Text("Squares position");
-        ImGui::DragFloat3("Red", &translationA.x, 1.0f, -960.0f, 960.0f);
-        ImGui::DragFloat3("Green", &translationB.x, 1.0f, -960.0f, 960.0f);
+        ImGui::DragFloat3("Red", &redSquarePosition.x, 1.0f, -960.0f, 960.0f);
+        ImGui::DragFloat3("Green", &greenSquarePosition.x, 1.0f, -960.0f, 960.0f);
         ImGui::Separator();
         ImGui::Text("Camera position");
         ImGui::DragFloat3("Camera", &vecView.x, 1.0f, -960.0f, 960.0f);
