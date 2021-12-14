@@ -3,6 +3,9 @@
 #include <gtc/matrix_transform.hpp>
 #include <states/states/menu-state.h>
 #include <renderer.h>
+#include <utils/keys.h>
+
+using namespace OpenGlExample::Keys;
 
 namespace OpenGlExample::States
 {
@@ -11,14 +14,14 @@ namespace OpenGlExample::States
               proj(glm::mat4(1.0f)),
               redSquarePosition(0, 0, 0),
               greenSquarePosition(0, 120, -130),
-              left(-480),
-              right(480),
-              bottom(-270),
-              top(270),
-              near(2),
-              far(1000),
+              left(SCREEN_WIDTH / -2.0f),
+              right(SCREEN_WIDTH / 2.0f),
+              bottom(SCREEN_HEIGHT / -2.0f),
+              top(SCREEN_HEIGHT / 2.0f),
+              near(0.1f),
+              far(10000),
               fovy(45),
-              vecView(0, 0, 500),
+              vecView(0, 0, 1300),
               vecCenter(0, 0, -1),
               vecHead(0, 1, 0),
               projectionType(ORTHOGRAPHIC)
@@ -93,7 +96,7 @@ namespace OpenGlExample::States
 
     void ProjectionMatrixState::renderImGui()
     {
-        ImGui::Begin("Viewport");
+        ImGui::Begin("Projection matrix");
         if(ImGui::Button("<-"))
         {
             root.createState<MenuState>();
@@ -105,14 +108,14 @@ namespace OpenGlExample::States
             if (ImGui::BeginTabItem("Orthographic"))
             {
                 projectionType = ORTHOGRAPHIC;
-                renderViewportData();
+                renderProjectionParameters();
                 renderElementsData();
                 ImGui::EndTabItem();
             }
             if (ImGui::BeginTabItem("Perspective"))
             {
                 projectionType = PERSPECTIVE;
-                renderViewportData();
+                renderProjectionParameters();
                 ImGui::DragFloat("fovy", &fovy, 1.0f, 0.0f, 180.0f);
                 renderElementsData();
                 ImGui::EndTabItem();
@@ -121,10 +124,10 @@ namespace OpenGlExample::States
         }
     }
 
-    void ProjectionMatrixState::renderViewportData()
+    void ProjectionMatrixState::renderProjectionParameters()
     {
         ImGui::Spacing();
-        ImGui::Text("Viewport");
+        ImGui::Text("Projection matrix parameters:");
         ImGui::DragFloat("left", &left, 1.0f, -1000.0f, 1000.0f);
         ImGui::DragFloat("right", &right, 1.0f, -1000.0f, 1000.0f);
         ImGui::DragFloat("bottom", &bottom, 1.0f, -1000.0f, 1000.0f);
@@ -141,6 +144,6 @@ namespace OpenGlExample::States
         ImGui::DragFloat3("Green", &greenSquarePosition.x, 1.0f, -960.0f, 960.0f);
         ImGui::Separator();
         ImGui::Text("Camera position");
-        ImGui::DragFloat3("Camera", &vecView.x, 1.0f, -960.0f, 960.0f);
+        ImGui::DragFloat3("Camera", &vecView.x, 1.0f, -2000.0f, 2000.0f);
     }
 }

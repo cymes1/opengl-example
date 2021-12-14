@@ -46,7 +46,7 @@ namespace OpenGlExample::States
         void renderImGui() override;
 
     private:
-        void renderViewportData();
+        void renderProjectionParameters();
         void renderElementsData();
     };
 }

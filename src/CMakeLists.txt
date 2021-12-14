@@ -2,6 +2,7 @@ set(EXECUTABLE opengl-example)
 
 set(HEADER_FILES
         debug/debug-callback.h
+        utils/keys.h
         )
 
 set(SOURCE_FILES main.cpp
