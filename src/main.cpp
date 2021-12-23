@@ -8,9 +8,11 @@
 #include <debug/debug-callback.h>
 #include <states/roots/root.h>
 #include <states/states/menu-state.h>
+#include <utils/keys.h>
 
 using namespace OpenGlExample;
 using namespace OpenGlExample::States;
+using namespace OpenGlExample::Keys;
 
 void GLFW_error(int error, const char* description)
 {
@@ -86,7 +88,7 @@ bool createGLFWWindow(GLFWwindow*& window)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 
-    window = glfwCreateWindow(960, 540, "OpenGL Example", nullptr, nullptr);
+    window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "OpenGL Example", nullptr, nullptr);
     if(!window)
     {
         glfwTerminate();
