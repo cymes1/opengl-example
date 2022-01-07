@@ -6,6 +6,7 @@ set(STATES_HEADER_FILES
         states/projection-matrix-state.h
         states/texture-2d-state.h
         states/basic-square-state.h
+        states/basic-renderer-state.h
         )
 
 set(STATES_SOURCE_FILES
@@ -16,6 +17,7 @@ set(STATES_SOURCE_FILES
         states/projection-matrix-state.cpp
         states/texture-2d-state.cpp
         states/basic-square-state.cpp
+        states/basic-renderer-state.cpp
         )
 
 add_library(${STATES_LIB} ${STATES_SOURCE_FILES} ${STATES_HEADER_FILES})

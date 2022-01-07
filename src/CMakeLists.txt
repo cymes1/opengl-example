@@ -2,11 +2,15 @@ set(EXECUTABLE opengl-example)
 
 set(HEADER_FILES
         debug/debug-callback.h
+        renderer/basic-renderer.h
+        renderer/sprite.h
         utils/keys.h
         )
 
 set(SOURCE_FILES main.cpp
         debug/debug-callback.cpp
+        renderer/basic-renderer.cpp
+        renderer/sprite.cpp
         )
 
 add_executable(${EXECUTABLE} ${SOURCE_FILES}

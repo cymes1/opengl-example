@@ -38,8 +38,6 @@ namespace OpenGlExample::States
 
 		glGenVertexArrays(1, &vao);
 		glBindVertexArray(vao);
-
-
 		GLsizei stride = 4 * 4;
 		GLuint offset = 0;
 		glEnableVertexAttribArray(0);
